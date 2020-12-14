@@ -14,3 +14,24 @@ ZoomMtg.prepareJssdk()
 
 console.log(testTool.parseQuery())
 joinMeeting(testTool.parseQuery())
+
+function joinMeeting(gmc)
+{
+    ZoomMtg.init({
+        leaveUrl: 'index.html',
+        isSupportAV: true,
+        success: function() {
+            toggleBox()
+            ZoomMtg.join({
+                signature: gmc.signature,
+                apiKey: gmc.apiKey,
+                meetingNumber: gmc.mn,
+                userName: gmc.name,
+                passWord: gmc.pwd,
+                error(res) {
+                    // console.log(res)
+                }
+            })
+        }
+    })
+}
