@@ -1,9 +1,10 @@
 // const SIGNENDPOINT = 'https://flzoom.herokuapp.com/'
-const SIGNENDPOINT = '/signature'
+const SIGNENDPOINT = './signature'
 
 $(document).on('click', '#join', function()
 {
     var foo = getMeetingConfig()
+    var file = './meeting.html?'
     var data = {
         meetingNumber: foo.mn,
         role: foo.role
@@ -13,7 +14,7 @@ $(document).on('click', '#join', function()
     if (signature)
     {
         foo.signature = signature
-        var src = '/meeting.html?' + testTool.serialize(foo)
+        var src = file + testTool.serialize(foo)
     } else {
         $.ajax({
             url: SIGNENDPOINT,
@@ -22,7 +23,7 @@ $(document).on('click', '#join', function()
             success: function(res) {
                 foo.signature = res.signature
                 foo.apiKey = res.apiKey
-                var src = '/meeting.html?' + testTool.serialize(foo)
+                var src = file + testTool.serialize(foo)
                 $('iframe').attr('src', src)
             }
         })
