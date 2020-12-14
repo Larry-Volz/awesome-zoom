@@ -33,6 +33,10 @@ $(document).on('click', '#join', function()
     $('iframe').attr('src', src)
 })
 
+$(document).ready(function() {
+    $('select').next('input[disabled="disabled"]').val($('select').val())
+})
+
 $(document).on('change', 'select', function()
 {
     $(this).next('input[disabled="disabled"]').val($(this).val())
