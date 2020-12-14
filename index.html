@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>zoom</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <style>
+    html,body,iframe{border:none;padding:0;margin:0;}
+    div.box{position:relative;z-index:1;background:#fff;top:0;left:0;}
+    div.row{clear:both;margin:5px;}
+    div.col{display:inline-block;min-width:13%;}
+    div.sign-div{display:inline-block;width:85%;}
+    div.sign-div input{width:100%;}
+    pre.url{white-space:normal;display:block;word-wrap:break-word;word-break:break-all;}
+    div.row button{margin-right:20px;font-size:16px;padding:4px 10px;background:#0cf;color:#333;}
+    iframe{width:100%;height:100vh;}
+  </style>
+  <div id="demo3sdk-box" class="box">
+    <div class="row">
+      <div class="col">
+        <span>user name</span>
+      </div>
+      <div class="col">
+        <input value="lio" type="text" name="name">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>meeting ID</span>
+      </div>
+      <div class="col">
+        <!-- <input id="metid" value="86002890126" type="text" name="meetingNumber"> -->
+        <select id="metid" name="meetingNumber">
+          <option value="86002890126" pwd="GFuk5a">86002890126</option>
+          <option value="84939138140" pwd="Q4wiN6">84939138140</option>
+        </select>
+        <input type="text" disabled="disabled">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>password (optional)</span>
+      </div>
+      <div class="col">
+        <input id="pwd" value="GFuk5a" type="text" name="passWord">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>host?</span>
+      </div>
+      <div class="col">
+        <input type="checkbox" name="role" value="1">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <span>signature :</span>
+      </div>
+      <div class="sign-div">
+        <input id="signature" type="text" name="signature">
+      </div>
+    </div>
+    <div class="row">
+      <button id="join">join</button>
+      <button id="websdk-sign-join">websdk-sign:join</button>
+      <button id="php-sign-join">php-sign:join</button>
+      <!-- <button id="create-join">create:join</button> -->
+    </div>
+    <div class="row">
+      <pre class="signature"></pre>
+      <pre class="url"></pre>
+    </div>
+
+    <div class="row">
+      <iframe src=""></iframe>
+    </div>
+  </div>
+  <script src="js/tool.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
