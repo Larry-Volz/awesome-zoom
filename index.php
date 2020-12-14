@@ -34,6 +34,10 @@ class foo
      */
     public function run()
     {
+        // if no _SERVER['PATH_INFO']
+        if (!isset($_SERVER['PATH_INFO']))
+            die(header('Location:index.html'));
+
         // path info -> method name.
         $this->pinfo = current(explode('/', trim($_SERVER['PATH_INFO'], '/')));
 
@@ -46,8 +50,7 @@ class foo
         if (method_exists('foo', $pinfo))
             return self::$pinfo();
         else
-            self::fail();
-            // self::fail(5051);
+            self::fail(5051);
     }
 
     /**
@@ -59,6 +62,7 @@ class foo
             'meetingNumber' => ['require', 'integer'],
             'role' => ['require', ['in', [0, 1]]]
         ])) {
+            $arr['apiKey'] = self::API_KEY;
             $arr['signature'] = self::generateSignature(
                 self::API_KEY,
                 self::API_SECRET,

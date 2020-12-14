@@ -9,11 +9,11 @@ ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.8.3/lib', '/av')
 // In China use jssdk.zoomus.cn:
 // ZoomMtg.setZoomJSLib('https://jssdk.zoomus.cn/1.8.3/lib', '/av')
 
+ZoomMtg.preLoadWasm()
+ZoomMtg.prepareJssdk()
 
-const API_KEY = 'PQzQIKdbRjuhJu3w9XQS2g'
-const API_SECRET = "tQpPwgiFchDJ3R5Koelaw3IqqQNDP8wir5Kf"
-// const SIGNENDPOINT = 'https://flzoom.herokuapp.com/'
-const SIGNENDPOINT = '/signature'
+console.log(testTool.parseQuery())
+joinMeeting(testTool.parseQuery())
 
 $(document).on('click', '#join', function()
 {
@@ -47,64 +47,6 @@ $(document).on('click', '#join', function()
     $('.url').text(src)
     $('iframe').attr('src', src)
 })
-
-function getFormData()
-{
-    var data = {}
-    var meetingNumber = parseInt($('#metid').val())
-    var passWord = $('#pwd').val()
-    var role = 0
-
-    data.name = ''
-    data.email = ''
-    data.lang = 'en-US'
-    data.china = 0
-
-    $(['name','email','lang','china']).each(function(k,v)
-    {
-        var foo = $('input[name="' + v + '"]').val()
-        if (foo)
-            data[v] = foo
-    })
-
-    if (!meetingNumber)
-        alert('no meeting ID')
-    if ($('input[name="role"]').is(':checked'))
-        role = 1
-
-    data.name = testTool.b64EncodeUnicode(data.name)
-    data.email = testTool.b64EncodeUnicode(data.email)
-    data.meetingNumber = meetingNumber
-    data.passWord = passWord
-    data.role = parseInt(role, 10)
-    return data
-}
-
-function getMeetingConfig()
-{
-    var foo = getFormData()
-    return {
-        mn: parseInt(foo.meetingNumber),
-        name: testTool.b64DecodeUnicode(foo.name),
-        pwd: foo.passWord,
-        role: parseInt(foo.role, 10),
-        email: testTool.b64DecodeUnicode(foo.email),
-        lang: foo.lang,
-        signature: "",
-        china: foo.china
-    }
-}
-
-$(document).on('change', 'select', function()
-{
-    $(this).next('input[disabled="disabled"]').val($(this).val())
-    $('#pwd').val($(this).find('option:selected').attr('pwd'))
-})
-
-function toggleBox()
-{
-    $('#demo3sdk-box').toggle()
-}
 
 /* ========================================================================== */
 
@@ -180,65 +122,4 @@ $(document).on('click', '#php-sign-join', function()
 {
     var gmc = getMeetingConfig()
     phpSignJoin(gmc)
-})
-
-/**
- * create meeting.
- */
-function createMeeting()
-{
-    var cmData = {
-        topic: "API Test",
-        type: 2,
-        start_time: "2020-12-14 00:00:00",
-        duration: 60,
-        schedule_for: "",
-        timezone: "America/New_York",
-        password: "",
-        agenda: "",
-        recurrence: {
-            type: 1,
-            repeat_interval: 1,
-            weekly_days: "",
-            monthly_day: 1,
-            monthly_week: 1,
-            monthly_week_day: 1,
-            end_times: 24,
-            end_date_time: "2020-12-15 00:00:00"
-        },
-        settings: {
-            host_video: false,
-            participant_video: false,
-            cn_meeting: false,
-            in_meeting: false,
-            join_before_host: true,
-            mute_upon_entry: false,
-            watermark: false,
-            use_pmi: false,
-            approval_type: 2,
-            registration_type: 0,
-            audio: "both",
-            auto_recording: "local",
-            enforce_login: false,
-            enforce_login_domains: "",
-            alternative_hosts: "",
-            global_dial_in_countries: [],
-            registrants_email_notification: false
-        }
-    }
-}
-
-/**
- * create meeting, join with websdk signature.
- */
-$(document).on('click', '#create-join', function()
-{
-    const gmc = getMeetingConfig()
-
-    if (gmc.role == 1)
-    {
-        createMeeting()
-    }
-
-    websdkSignJoin(gmc)
 })
