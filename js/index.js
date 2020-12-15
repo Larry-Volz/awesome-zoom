@@ -5,10 +5,9 @@ $(document).on('click', '#join', function()
 {
     var foo = getMeetingConfig()
     var file = './meeting.html?'
-    var data = {
-        meetingNumber: foo.mn,
-        role: foo.role
-    }
+    var data = {}
+    data.meetingNumber = foo.mn
+    data.role = foo.role
     var signature = $('#signature').val()
 
     if (signature)
@@ -28,10 +27,6 @@ $(document).on('click', '#join', function()
             }
         })
     }
-
-    $('.signature').text(foo.signature)
-    $('.url').text(src)
-    $('iframe').attr('src', src)
 })
 
 $(document).ready(function() {
