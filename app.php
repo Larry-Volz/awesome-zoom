@@ -1,6 +1,7 @@
 <?php
 spl_autoload_register(function($class) {
-    if (is_file(__DIR__.'/' . $class . '.class.php'))
-        include __DIR__.'/' . $class . '.class.php';
+    $filename = __DIR__.'/app'.strpbrk($class, '\\').'.class.php';
+    if (is_file($filename))
+        require_once $filename;
 });
 new app\AwesomeZoom();
