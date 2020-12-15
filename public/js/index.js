@@ -93,12 +93,10 @@ function createMeeting()
  */
 $(document).on('click', '#create-join', function()
 {
-    const gmc = getMeetingConfig()
-
-    if (gmc.role == 1)
-    {
-        createMeeting()
-    }
-
-    websdkSignJoin(gmc)
+    $.ajax({
+        url: './userAuth',
+        success: function(res) {
+            location.href = res.url
+        }
+    })
 })

@@ -112,7 +112,7 @@ class AwesomeZoom
     /**
      * generate signature function from zoom documentation.
      */
-    private function generateSignature ($api_key, $api_secret, $meeting_number, $role)
+    private function generateSignature($api_key, $api_secret, $meeting_number, $role)
     {
         $time = time() * 1000 - 30000;//time in milliseconds (or close enough)
         $data = base64_encode($api_key . $meeting_number . $time . $role);
@@ -125,20 +125,40 @@ class AwesomeZoom
     /**
      * Request User Authorization.
      */
-    private function untitle()
+    public function userAuth()
     {
-        $data['response_type'] = 'code';
-        $data['redirect_uri'] = 'https://02fa5d6d5265.ngrok.io/rec';
-        $data['client_id'] = CLIENT_ID;
+        $arr[] = 'response_type=code';
+        $arr[] = 'redirect_uri=https://02fa5d6d5265.ngrok.io/rec';
+        $arr[] = 'client_id='.self::CLIENT_ID;
+        JsonResponse::json([
+            'url' => 'https://zoom.us/oauth/authorize?' . implode('&', $arr)
+        ]);
+    }
+
+    public function rec()
+    {
+        var_dump($_REQUIRE);
     }
 
     /**
      * Request Access Token.
      */
-    private function untitle2()
+    public function accessToken()
     {
-        $data['response_type'] = 'code';
+        $data['response_type'] = 'authorization_code';
+        $data['code'] = CLIENT_ID;
         $data['redirect_uri'] = 'https://02fa5d6d5265.ngrok.io/rec';
-        $data['client_id'] = CLIENT_ID;
+
+        $bar = base64_encode(CLIENT_ID.':'.CLIENT_SECRET);
+        $foo['Authorization'] = "Basic $bar";
+    }
+
+    private function curl()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, '');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
     }
 }
