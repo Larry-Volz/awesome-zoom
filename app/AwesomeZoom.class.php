@@ -1,9 +1,13 @@
 <?php
-// error_reporting(0);
-class foo
+namespace app;
+class AwesomeZoom
 {
     const API_KEY = 'PQzQIKdbRjuhJu3w9XQS2g';
     const API_SECRET = 'tQpPwgiFchDJ3R5Koelaw3IqqQNDP8wir5Kf';
+    const CLIENT_ID = 'kywQ5vr3TUGbokq9LXcIyA';
+    const CLIENT_SECRET = 'GC1OqzVfuYq8fJ6rv2X9dfIuXjVbSYOO';
+
+    const UNTITLED = 'https://zoom.us/oauth/authorize';
     const DENY_METHODS = ['__construct', 'run'];
     const ERRORS = [
         5001 => 'Unknow error!',
@@ -14,7 +18,6 @@ class foo
     private $pinfo = '';
 
     public function __construct() {
-        // self::dd(self::ERRORS);
         self::run();
     }
 
@@ -47,7 +50,7 @@ class foo
 
         // check method exists and call the method.
         $pinfo = $this->pinfo;
-        if (method_exists('foo', $pinfo))
+        if (method_exists($this, $pinfo))
             return self::$pinfo();
         else
             self::fail(5051);
@@ -69,7 +72,7 @@ class foo
                 $_POST['meetingNumber'],
                 $_POST['role']
             );
-            self::json($arr);
+            JsonResponse::json($arr);
         } else {
             self::fail();
         }
@@ -161,14 +164,13 @@ class foo
         $arr['errorMessage'] = $emsg;
         $arr['method'] = $this->pinfo;
         $arr['result'] = $emsg;
-        $arr['status'] = false;
-        die(self::json($arr));
-    }
-
-    private function json($data=[])
-    {
-        header('Content-type: Application/json');
-        die(json_encode($data));
+        $arr['status'] = $ecode < 300;
+        // header_remove();
+        $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
+        header("$protocol $ecode $emsg");
+        http_response_code($ecode);
+        header("Status: $emsg");
+        die(JsonResponse::json($arr));
     }
 
     /**
@@ -184,5 +186,3 @@ class foo
         return rtrim(strtr(base64_encode($_sig), '+/', '-_'), '=');
     }
 }
-
-new foo();

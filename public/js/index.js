@@ -24,6 +24,9 @@ $(document).on('click', '#join', function()
                 foo.apiKey = res.apiKey
                 var src = file + testTool.serialize(foo)
                 $('iframe').attr('src', src)
+            },
+            error: function(res) {
+                console.log(res)
             }
         })
     }
