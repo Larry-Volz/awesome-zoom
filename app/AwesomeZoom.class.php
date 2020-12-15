@@ -165,12 +165,7 @@ class AwesomeZoom
         $arr['method'] = $this->pinfo;
         $arr['result'] = $emsg;
         $arr['status'] = $ecode < 300;
-        // header_remove();
-        $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
-        header("$protocol $ecode $emsg");
-        http_response_code($ecode);
-        header("Status: $emsg");
-        die(JsonResponse::json($arr));
+        JsonResponse::error($arr);
     }
 
     /**
