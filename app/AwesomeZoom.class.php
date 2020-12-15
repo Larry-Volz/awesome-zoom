@@ -9,7 +9,8 @@ class AwesomeZoom
     const CLIENT_ID = 'kywQ5vr3TUGbokq9LXcIyA';
     const CLIENT_SECRET = 'GC1OqzVfuYq8fJ6rv2X9dfIuXjVbSYOO';
 
-    const UNTITLED = 'https://zoom.us/oauth/authorize';
+    const OAUTH_AUTHORIZE = 'https://zoom.us/oauth/authorize';
+    const OAUTH_ACCESSTOKEN = 'https://zoom.us/oauth/authorize';
     const DENY_METHODS = ['__construct', 'run'];
     const ERRORS = [
         5001 => 'Unknow error!',
@@ -119,5 +120,25 @@ class AwesomeZoom
         $_sig = $api_key . "." . $meeting_number . "." . $time . "." . $role . "." . base64_encode($hash);
         //return signature, url safe base64 encoded
         return rtrim(strtr(base64_encode($_sig), '+/', '-_'), '=');
+    }
+
+    /**
+     * Request User Authorization.
+     */
+    private function untitle()
+    {
+        $data['response_type'] = 'code';
+        $data['redirect_uri'] = 'https://02fa5d6d5265.ngrok.io/rec';
+        $data['client_id'] = CLIENT_ID;
+    }
+
+    /**
+     * Request Access Token.
+     */
+    private function untitle2()
+    {
+        $data['response_type'] = 'code';
+        $data['redirect_uri'] = 'https://02fa5d6d5265.ngrok.io/rec';
+        $data['client_id'] = CLIENT_ID;
     }
 }
