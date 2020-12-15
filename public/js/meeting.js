@@ -18,7 +18,7 @@ joinMeeting(testTool.parseQuery())
 function joinMeeting(gmc)
 {
     ZoomMtg.init({
-        leaveUrl: 'index.html',
+        leaveUrl: 'thanks.html',
         isSupportAV: true,
         success: function() {
             toggleBox()
